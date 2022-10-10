@@ -4,6 +4,11 @@ import { prisma } from "../database/prismaClient";
 export const createTable = async (req: Request, res: Response) => {
   const { table_num, chairs, price } = req.body;
 
+  if (!table_num || !chairs || !price) {
+    res.status(400);
+    throw new Error("Add all fields!");
+  }
+
   const table = await prisma.table.create({
     data: {
       chairs,
